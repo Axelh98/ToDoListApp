@@ -1,75 +1,118 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useMemo } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTasks } from '../../context/TasksContext';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+// Colores e íconos para las categorías
+const categoriesInfo = {
+  Trabajo: { color: '#f39c12', icon: 'briefcase' },
+  Estudios: { color: '#2980b9', icon: 'school' },
+  Casa: { color: '#27ae60', icon: 'home' },
+  Ejercicio: { color: '#e74c3c', icon: 'fitness' },
+  Compras: { color: '#9b59b6', icon: 'cart' },
+  Salud: { color: '#1abc9c', icon: 'heart' },
+};
 
-export default function HomeScreen() {
+export default function CategoriesScreen() {
+  const router = useRouter();
+  const { tasks } = useTasks();
+
+  // Calcula conteo de tareas por categoría
+  const categories = useMemo(() => {
+    const counts: Record<string, number> = {};
+    // Inicializamos los contadores en 0
+    Object.keys(categoriesInfo).forEach(cat => (counts[cat] = 0));
+    // Contamos tareas por categoría
+    tasks.forEach(task => {
+      if (counts[task.category] !== undefined) {
+        counts[task.category]++;
+      }
+    });
+    // Construimos arreglo con info completa
+    return Object.entries(categoriesInfo).map(([name, { color, icon }]) => ({
+      id: name,
+      name,
+      color,
+      icon,
+      count: counts[name] || 0,
+    }));
+  }, [tasks]);
+
+  const handlePress = (categoryName: string) => {
+    router.push(`/category/${categoryName}`);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.title}>My Tasks's Category</Text>
+      <FlatList
+        data={categories}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={[styles.card, { backgroundColor: item.color }]}
+            onPress={() => handlePress(item.name)}
+          >
+            <View style={styles.countContainer}>
+              <Text style={styles.countText}>{item.count}</Text>
+            </View>
+            <Ionicons name={item.icon as any} size={32} color="#fff" />
+            <Text style={styles.cardText}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f4f4f4',
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#333',
+  },
+  card: {
+    padding: 20,
+    borderRadius: 16,
+    marginBottom: 20,
+    flex: 0.48,
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    position: 'relative',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  cardText: {
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#fff',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  countContainer: {
     position: 'absolute',
+    top: 8,
+    right: 12,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  countText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });
