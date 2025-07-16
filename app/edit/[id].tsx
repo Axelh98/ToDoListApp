@@ -44,20 +44,20 @@ export default function EditTask() {
       <Text style={styles.label}>Editar Tarea</Text>
       <TextInput style={styles.input} value={title} onChangeText={setTitle} />
       <Picker selectedValue={category} onValueChange={setCategory}>
-        <Picker.Item label="Trabajo" value="Trabajo" />
-        <Picker.Item label="Estudios" value="Estudios" />
-        <Picker.Item label="Casa" value="Casa" />
-        <Picker.Item label="Ejercicio" value="Ejercicio" />
-        <Picker.Item label="Compras" value="Compras" />
-        <Picker.Item label="Salud" value="Salud" />
+        <Picker.Item label="Work" value="Work" />
+        <Picker.Item label="Study" value="Study" />
+        <Picker.Item label="Home" value="Home" />
+        <Picker.Item label="Exercise" value="Exercise" />
+        <Picker.Item label="Shopping" value="Shopping" />
+        <Picker.Item label="Health" value="Health" />
       </Picker>
       <Picker selectedValue={repetition} onValueChange={setRepetition}>
-        <Picker.Item label="Ninguna" value="Ninguna" />
-        <Picker.Item label="Diaria" value="Diaria" />
-        <Picker.Item label="Semanal" value="Semanal" />
-        <Picker.Item label="Mensual" value="Mensual" />
+        <Picker.Item label="None" value="None" />
+        <Picker.Item label="Daily" value="Daily" />
+        <Picker.Item label="Weekly" value="Weekly" />
+        <Picker.Item label="Monthly" value="Monthly" />
       </Picker>
-      <Button title="Guardar cambios" onPress={handleEdit} />
+      <Button title="Save Changes" onPress={handleEdit} />
     </View>
   );
 }
