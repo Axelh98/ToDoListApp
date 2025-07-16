@@ -3,8 +3,8 @@ import React, { useContext, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { Task, TasksContext } from "../../context/TasksContext";
 
-const categories = ["Trabajo", "Casa", "Estudios", "Ejercicio", "Compras"];
-const frequencies = ["Diaria", "Semanal", "Mensual"];
+const categories = ["Work", "Home", "Study", "Exercise", "Shopping"];
+const frequencies = ["Daily", "Weekly", "Monthly"];
 
 export default function CreateTaskScreen() {
   const { addTask } = useContext(TasksContext)!;
@@ -25,7 +25,7 @@ export default function CreateTaskScreen() {
       name: title,
       category,
       dueDate,
-      repetition: frequency as "Diaria" | "Semanal" | "Mensual",
+      repetition: frequency as "Daily" | "Weekly" | "Monthly",
     };
 
     addTask(newTask);

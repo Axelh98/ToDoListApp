@@ -6,12 +6,12 @@ import { useTasks } from '../../context/TasksContext';
 
 // Colores e íconos para las categorías
 const categoriesInfo = {
-  Trabajo: { color: '#f39c12', icon: 'briefcase' },
-  Estudios: { color: '#2980b9', icon: 'school' },
-  Casa: { color: '#27ae60', icon: 'home' },
-  Ejercicio: { color: '#e74c3c', icon: 'fitness' },
-  Compras: { color: '#9b59b6', icon: 'cart' },
-  Salud: { color: '#1abc9c', icon: 'heart' },
+  Work: { color: '#f39c12', icon: 'briefcase' },
+  Study: { color: '#2980b9', icon: 'school' },
+  Home: { color: '#27ae60', icon: 'home' },
+  Exercise: { color: '#e74c3c', icon: 'fitness' },
+  Shopping: { color: '#9b59b6', icon: 'cart' },
+  Health: { color: '#1abc9c', icon: 'heart' },
 };
 
 export default function CategoriesScreen() {

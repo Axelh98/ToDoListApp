@@ -23,8 +23,6 @@ This is a task management app built with **React Native**, **Expo**, and **Expo 
 
 ## 📁 Project Structure
 
-
-
 ## Get started
 
 1. Install dependencies

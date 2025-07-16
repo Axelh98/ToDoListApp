@@ -38,7 +38,7 @@ export default function CategoryTasks() {
                 />
 
                 <Button
-                  title="🗑️ Eliminar"
+                  title="🗑️ Delete"
                   color="red"
                   onPress={() => deleteTask(item.id)}
                 />

@@ -16,7 +16,7 @@ export default function EditTask() {
 
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [repetition, setRepetition] = useState<'Diaria' | 'Semanal' | 'Mensual' | 'Ninguna'>('Ninguna');
+  const [repetition, setRepetition] = useState<'Daily' | 'Weekly' | 'Monthly' | 'None'>('None');
 
   useEffect(() => {
     if (task) {

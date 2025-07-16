@@ -14,7 +14,7 @@ export type Task = {
   name: string;
   category: string;
   dueDate: string;
-  repetition: 'Diaria' | 'Semanal' | 'Mensual' | 'Ninguna';
+  repetition: 'Daily' | 'Weekly' | 'Monthly' | 'None';
 };
 
 // 2. Tipo del contexto
